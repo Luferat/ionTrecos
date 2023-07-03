@@ -33,6 +33,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule)
   },
   {
+    path: 'login',
+    title: `${env.appName} - Entrar`,
+    loadChildren: () => import('./user/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'logout',
+    title: `${env.appName} - Sair`,
+    loadChildren: () => import('./user/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'profile',
+    title: `${env.appName} - Perfil`,
+    loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
     path: '**',
     redirectTo: '404',
     pathMatch: 'full'
