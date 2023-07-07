@@ -10,17 +10,16 @@ import { environment } from 'src/environments/environment';
 export class LoginPage implements OnInit {
 
   public env = environment;
-  private auth: Auth = inject(Auth);
 
-  constructor() { }
+  constructor(private auth: Auth = inject(Auth)) { }
 
   ngOnInit() { }
 
   login() {
-    // signInWithRedirect(this.auth, new GoogleAuthProvider());
-    signInWithPopup(this.auth, new GoogleAuthProvider()).then((res: any | null) => {
-      console.log(res.user)
-    })
+    if (this.env.signInMethod == 'redirect')
+      signInWithRedirect(this.auth, new GoogleAuthProvider());
+    else
+      signInWithPopup(this.auth, new GoogleAuthProvider());
   }
 
 }

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { environment as env } from './../environments/environment';
+import { redirectUnauthorizedTo, redirectLoggedInTo, AuthGuard } from '@angular/fire/auth-guard';
+
+const toLogin = () => redirectUnauthorizedTo(['/login']);
+const toHome = () => redirectLoggedInTo(['/home']);
 
 const routes: Routes = [
   {
@@ -35,17 +39,21 @@ const routes: Routes = [
   {
     path: 'login',
     title: `${env.appName} - Entrar`,
-    loadChildren: () => import('./user/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'logout',
-    title: `${env.appName} - Sair`,
-    loadChildren: () => import('./user/logout/logout.module').then( m => m.LogoutPageModule)
+    loadChildren: () => import('./user/login/login.module').then(m => m.LoginPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: toHome }
   },
   {
     path: 'profile',
     title: `${env.appName} - Perfil`,
-    loadChildren: () => import('./user/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./user/profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: toLogin }
+  },
+  {
+    path: 'policies',
+    title: `${env.appName} - Sua privacidade`,
+    loadChildren: () => import('./pages/policies/policies.module').then( m => m.PoliciesPageModule)
   },
   {
     path: '**',

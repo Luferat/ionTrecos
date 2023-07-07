@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Sua Privacidade</ion-title>
+    <ion-icon name="document-lock" slot="end" size="large" class="ion-margin"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <img src="assets/privacity.png" style="width: 100%; max-width: 400px; display: block; margin: auto;">
+
+  <p><em>Esta Política de Privacidade descreve como o {{ env.appName }} coleta, usa, armazena e protege as informações
+    pessoais dos usuários que utilizam o recurso de login social pelo Google para deixar comentários em nossas
+    postagens. Garantimos que todas as informações coletadas serão tratadas de acordo com os princípios de privacidade e
+    proteção de dados estabelecidos nesta política.</em></p>
+
+  <h3>1. Informações coletadas</h3>
+  <p>Ao utilizar o recurso de login social pelo Google para deixar comentários em nosso blog, coletamos as seguintes
+    informações pessoais do usuário:</p>
+  <ul>
+    <li>Nome Social: coletamos o nome fornecido pelo provedor de login social (Google) para identificar o usuário no
+      blog.</li>
+    <li>Endereço de e-mail: coletamos o endereço de e-mail fornecido pelo provedor de login social (Google) para
+      permitir a comunicação e notificações relacionadas aos comentários.</li>
+    <li>Foto de perfil: coletamos o endereço da foto de perfil fornecido pelo provedor de login social (Google) para
+      compor os comentários.</li>
+  </ul>
+  <p>Por utilizarmos o recurso de login social, em nenhum momento temos acesso ou armazenamos informações além das
+    supracitadas, inclusive senhas e outros dados mais restritos.</p>
+
+  <h3>2. Uso das informações</h3>
+  <p>As informações pessoais coletadas são utilizadas exclusivamente para os seguintes fins:</p>
+  <ul>
+    <li>Identificação do usuário nos comentários.</li>
+    <li>Comunicação relacionada aos comentários, como notificações sobre respostas ou atualizações nas postagens.</li>
+  </ul>
+
+  <h3>3. Armazenamento das informações</h3>
+  <p>As informações pessoais coletadas são armazenadas em nossos sistemas de forma segura e protegida, garantindo a
+    confidencialidade e a integridade dos dados.</p>
+
+  <h3>4. Compartilhamento das informações</h3>
+  <p>As informações pessoais coletadas não são compartilhadas, vendidas, alugadas ou divulgadas a terceiros, exceto nos
+    seguintes casos:</p>
+  <ul>
+    <li>Quando exigido por lei ou para cumprir uma obrigação legal.</li>
+    <li>Com o provedor de login social (Google), para autenticação e validação das informações de login.</li>
+  </ul>
+
+  <h3>5. Segurança das informações</h3>
+  <p>Empregamos medidas de segurança adequadas para proteger as informações pessoais dos usuários contra acesso não
+    autorizado, divulgação, alteração ou destruição. Essas medidas incluem criptografia, controles de acesso físico e
+    lógico, e restrições de acesso às informações pessoais apenas a funcionários autorizados que precisam ter
+    conhecimento delas para desempenhar suas funções.</p>
+
+  <h3>6. Retenção das informações</h3>
+  <p>As informações pessoais coletadas serão retidas pelo tempo necessário para cumprir os propósitos estabelecidos
+    nesta política de privacidade, a menos que um período de retenção mais longo seja exigido ou permitido por lei.</p>
+
+  <h3>7. Direitos do usuário</h3>
+  <p>Os usuários têm o direito de acessar, corrigir, atualizar ou solicitar a exclusão de suas informações pessoais.
+    Caso queira exercer esses direitos ou tenha dúvidas sobre esta política de privacidade, entre em contato conosco por
+    meio das informações fornecidas no final desta política.</p>
+
+  <h3>8. Alterações nesta política de privacidade</h3>
+  <p>Reservamo-nos o direito de modificar esta política de privacidade a qualquer momento. Quaisquer alterações serão
+    devidamente atualizadas nesta página.</p>
+
+  <h3>9. Contato</h3>
+  <p>Se você tiver dúvidas ou preocupações sobre esta política de privacidade ou sobre a forma como tratamos as
+    informações pessoais dos usuários, entre em contato conosco pelo endereço de e-mail fornecido abaixo:</p>
+  <p>Endereço de e-mail: [insira aqui o seu endereço de contato]</p>
+
+  <p>Data de vigência: {{ env.policiesDate | date: 'dd/MM/yyyy' }}</p>
+  <p>Última atualização: {{ expires | date: 'dd/MM/yyyy' }}</p>
+
+</ion-content>

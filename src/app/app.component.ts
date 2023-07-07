@@ -18,7 +18,8 @@ export class AppComponent {
   public appPages = [
     { title: 'Início', url: '/home', icon: 'home' },
     { title: 'Faça Contato', url: '/contacts', icon: 'chatbubbles' },
-    { title: 'Sobre', url: '/about', icon: 'information-circle' }
+    { title: 'Sobre', url: '/about', icon: 'information-circle' },
+    { title: 'Sua Privacidade', url: '/policies', icon: 'document-lock' }
   ];
 
   public appUser = {

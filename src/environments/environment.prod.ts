@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   appName: 'ionTrecos',
   appSlogan: 'Devaneios Acumulativos',
+  signInMethod: 'redirect', // redirect || popup
   firebase: {
     apiKey: 'AIzaSyCGSnYpx2qEgP5XV306-NFxsiPr998Ukus',
     authDomain: 'myionicfrontend2.firebaseapp.com',

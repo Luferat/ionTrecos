@@ -3,14 +3,46 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">Perfil de Usuário</ion-title>
+    <ion-title class="ion-text-center">{{ userFirstName }}</ion-title>
     <ion-icon name="person" slot="end" size="large" class="ion-margin"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt quisquam amet quia quibusdam dolores eos earum
-  recusandae tempore rem adipisci illum placeat distinctio accusamus quaerat ipsa exercitationem, saepe aut perferendis.
+  <ion-card *ngIf="user" style="max-width: 400px; margin:auto;">
+    <img [alt]="user.displayName" [src]="user.photoURL" style="display: block; margin: auto;" />
+    <ion-card-header>
+      <ion-card-title>{{ user.displayName }}</ion-card-title>
+      <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ul style="margin: 0; padding: 0 0 0 1rem;">
+        <li><strong>Cadastro: </strong> {{ user.metadata.creationTime | date: 'dd/MM/yyyy' }} às {{
+          user.metadata.creationTime | date: 'HH:mm' }}</li>
+        <li><strong>Último login: </strong> {{ user.metadata.lastSignInTime | date: 'dd/MM/yyyy' }} às {{
+          user.metadata.lastSignInTime | date: 'HH:mm' }}</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+
+  <p>Seu perfil é gerenciado pelo <strong>Google</strong>. Clique no botão abaixo para acessar seu perfil.</p>
+
+  <p class="ion-text-center">
+    <ion-button (click)="toProviderProfile()">
+      <ion-icon slot="start" name="logo-google"></ion-icon>
+      Ver perfil no Google
+    </ion-button>
+  </p>
+
+  <p>Clique no botão abaixo para sair do aplicativo neste dispositivo. Você precisará entrar novamente para ter acesso
+    aos recursos restritos do <em>{{ env.appName }}</em>.</p>
+
+  <p class="ion-text-center">
+    <ion-button (click)="logout()" color="warning">
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      Sair do aplicativo
+    </ion-button>
+  </p>
 
 </ion-content>
