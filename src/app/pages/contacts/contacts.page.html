@@ -10,6 +10,34 @@
 
 <ion-content class="ion-padding">
 
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum recusandae temporibus voluptates id ducimus asperiores pariatur, porro maxime placeat provident quibusdam animi veniam harum deserunt commodi, nam, dolorum officia optio.
-  
+  <form>
+
+    <p>Preencha todos os campos abaixo para entrar em contato com a equipe do {{ env.appName }}.</p>
+
+    <p>
+      <ion-input label="Nome:" type="text" label-placement="floating" fill="outline" placeholder="Seu nome completo"
+        [autofocus]="true"></ion-input>
+    </p>
+
+    <p>
+      <ion-input label="Email:" type="email" label-placement="floating" fill="outline"
+        placeholder="Seu e-mail"></ion-input>
+    </p>
+
+    <p>
+      <ion-input label="Assunto:" type="text" label-placement="floating" fill="outline"
+        placeholder="Assunto do contato"></ion-input>
+    </p>
+
+    <p>
+      <ion-textarea label="Mensagem:" labelPlacement="floating" fill="outline" [autoGrow]="true"
+        placeholder="Mensagem do contato"></ion-textarea>
+    </p>
+
+    <p>
+      <ion-button type="submit">Enviar</ion-button>
+    </p>
+
+  </form>
+
 </ion-content>
