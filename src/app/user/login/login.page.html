@@ -3,27 +3,19 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Login / Entrar</ion-title>
+    <ion-title class="ion-text-center">Login / Entrar</ion-title>
+    <ion-icon name="log-in" slot="end" size="large" class="ion-margin"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Login / Entrar</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div class="ion-padding">
-    <h2>Login / Entrar</h2>
-    <p>Logue-se para ter acesso ao conteúdo e ferramentas restritos.</p>
-    <p class="ion-text-center">
-      <ion-button (click)="login()">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Logue-se com o Google
-      </ion-button>
-    </p>
-    <p><em>Se necessário, desligue o bloqueador de popups para este site.</em></p>
-  </div>
-
+<ion-content class="ion-padding">
+  <h2>Login / Entrar</h2>
+  <p>Logue-se para ter acesso ao conteúdo e ferramentas restritos.</p>
+  <p class="ion-text-center">
+    <ion-button (click)="login()">
+      <ion-icon slot="start" name="logo-google"></ion-icon>
+      Logue-se com o Google
+    </ion-button>
+  </p>
+  <p><em>Se necessário, desligue o bloqueador de popups para este site.</em></p>
 </ion-content>

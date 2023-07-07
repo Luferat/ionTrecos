@@ -22,7 +22,7 @@ export class AppComponent {
   ];
 
   public appUser = {
-    logged: false,
+    logged: false, 
     title: 'Login / Entrar',
     url: '/login',
     icon: 'log-in',
