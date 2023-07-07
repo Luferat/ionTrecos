@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Auth, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect, User } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, User } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,10 +17,10 @@ export class LoginPage implements OnInit {
   ngOnInit() { }
 
   login() {
+    // signInWithRedirect(this.auth, new GoogleAuthProvider());
     signInWithPopup(this.auth, new GoogleAuthProvider()).then((res: any | null) => {
       console.log(res.user)
     })
-
   }
 
 }
