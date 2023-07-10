@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>fbview</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="thing">
+
+    <h4>Detalhes de {{ thing.name }}</h4>
+    <ul>
+      <li>Nome: {{ thing.name }}</li>
+      <li>Descrição: {{ thing.description }}</li>
+      <li>Localização: {{ thing.location }}</li>
+      <li>Data: {{ thing.date | date: 'dd/MM/yyyy, HH:mm' }}</li>
+    </ul>
+
+  </div>
+
+</ion-content>

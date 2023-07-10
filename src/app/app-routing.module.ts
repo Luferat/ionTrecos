@@ -56,6 +56,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/policies/policies.module').then( m => m.PoliciesPageModule)
   },
   {
+    path: 'fbpopulate',
+    loadChildren: () => import('./temp/fbpopulate/fbpopulate.module').then( m => m.FbpopulatePageModule)
+  },
+  {
+    path: 'fblist',
+    loadChildren: () => import('./temp/fblist/fblist.module').then( m => m.FblistPageModule)
+  },
+  {
+    path: 'fbview/:id',
+    loadChildren: () => import('./temp/fbview/fbview.module').then( m => m.FbviewPageModule)
+  },
+  {
     path: '**',
     redirectTo: '404',
     pathMatch: 'full'

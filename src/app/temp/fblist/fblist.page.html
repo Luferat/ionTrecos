@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>fblist</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+
+  <div *ngIf="things">
+
+    <ul *ngFor="let thing of things | async">
+      <li><a routerLink="/fbview/{{ thing.id }}">{{ thing.name }}</a></li>
+    </ul>
+
+  </div>
+
+</ion-content>
