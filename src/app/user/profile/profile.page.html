@@ -11,17 +11,23 @@
 <ion-content class="ion-padding">
 
   <ion-card *ngIf="user" style="max-width: 400px; margin:auto;">
-    <img [alt]="user.displayName" [src]="user.photoURL" style="display: block; margin: auto;" />
+    <ion-img [alt]="user.displayName" [src]="user.photoURL" style="display: block; margin: auto;"></ion-img>
     <ion-card-header>
       <ion-card-title>{{ user.displayName }}</ion-card-title>
       <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ul style="margin: 0; padding: 0 0 0 1rem;">
-        <li><strong>Cadastro: </strong> {{ user.metadata.creationTime | date: 'dd/MM/yyyy' }} às {{
-          user.metadata.creationTime | date: 'HH:mm' }}</li>
-        <li><strong>Último login: </strong> {{ user.metadata.lastSignInTime | date: 'dd/MM/yyyy' }} às {{
-          user.metadata.lastSignInTime | date: 'HH:mm' }}</li>
+        <li>
+          <strong>Cadastro: </strong>
+          {{ user.metadata.creationTime | date: 'dd/MM/yyyy' }}
+          às {{ user.metadata.creationTime | date: 'HH:mm' }}
+        </li>
+        <li>
+          <strong>Último login: </strong>
+          {{ user.metadata.lastSignInTime | date: 'dd/MM/yyyy' }}
+          às {{ user.metadata.lastSignInTime | date: 'HH:mm' }}
+        </li>
       </ul>
     </ion-card-content>
   </ion-card>

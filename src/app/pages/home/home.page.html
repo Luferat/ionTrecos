@@ -10,6 +10,24 @@
 
 <ion-content class="ion-padding">
 
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut sint nemo, beatae quaerat ullam voluptas nesciunt officia facilis? Voluptas neque aliquam cupiditate minima repellendus minus tempore quaerat totam laudantium illo?
+  <div *ngIf="things">
+
+    <ion-list>
+
+      <ion-list-header>
+        <ion-label>Lista de Trecos</ion-label>
+      </ion-list-header>
+
+      <!-- Loop assíncrono para obter cada item da coleção. -->
+      <ion-item *ngFor="let thing of things | async">
+        <ion-label>
+          <h3><a routerLink="/view/{{ thing.id }}">{{ thing.name }}</a></h3>
+          <p>{{ thing.description }}</p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
 
 </ion-content>

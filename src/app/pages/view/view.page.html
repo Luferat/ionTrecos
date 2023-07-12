@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Exibe um Treco</ion-title>
+    <ion-icon name="cube" slot="end" size="large" class="ion-margin"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card *ngIf="thing" class="ion-no-margin">
+    <ion-card-header>
+      <ion-card-title>{{ thing.name }}</ion-card-title>
+      <ion-card-subtitle>{{ thing.location }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ thing.description }}
+      <ul>
+        <li>Em: {{ thing.date | date: 'dd/MM/yyyy' }}</li>
+      </ul>
+
+      <ion-grid class="ion-text-center ion-no-padding">
+        <ion-row>
+          <ion-col><a routerLink="/home">Listar Todos</a></ion-col>
+          <ion-col><a routerLink="/edit">Editar</a></ion-col>
+          <ion-col><a routerLink="/delete">Apagar</a></ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

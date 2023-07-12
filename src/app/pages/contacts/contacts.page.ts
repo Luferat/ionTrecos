@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { Auth, User, authState } from '@angular/fire/auth';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -29,18 +31,51 @@ export class ContactsPage implements OnInit {
   // Se a coleção não existe, será criada.
   contactsCollection = collection(this.firestore, 'contacts');
 
-  constructor() { }
+  // Prepara a autenticação do usuário.
+  authState = authState(this.auth);
+  authStateSubscription = new Subscription;
 
-  ngOnInit() { }
+  constructor(
+    // Injeta a dependêndia do Firebase Auth.
+    private auth: Auth = inject(Auth)
+  ) { }
 
+  ngOnInit() {
+
+    // Observer que obtém status de usuário logado.
+    this.authStateSubscription = this.authState.subscribe(
+      (userData: User | null) => {
+
+        // Se tem alguém logado.
+        if (userData) {
+
+          // Preenche os campos 'nome' e 'email'.
+          this.form.name = userData.displayName + '';
+          this.form.email = userData.email + '';
+        }
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+
+    // Remove o observer ao concluir o componente.
+    this.authStateSubscription.unsubscribe();
+  }
+
+  // Salva contato.
   sendForm() {
+
+    // Regex simples para validar e-mail.
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     // Valida preenchimento dos campos.
     if (
-      this.form.name.length < 3 ||
-      this.form.email.indexOf('@') < 1 ||
-      this.form.subject.length < 3 ||
-      this.form.message.length < 5
+      this.form.name.trim().length < 3 ||
+      !regexEmail.test(this.form.email.trim()) ||
+      this.form.subject.trim().length < 3 ||
+      this.form.message.trim().length < 5
     ) return false;
 
     // Gera a data atual no formado ISO.

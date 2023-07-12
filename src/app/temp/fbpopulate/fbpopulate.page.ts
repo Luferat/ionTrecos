@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-fbpopulate',
@@ -16,7 +16,7 @@ export class FbpopulatePage implements OnInit {
     { name: 'Tranqueira', description: 'Alguma tranqueira', location: 'No canto', date: '2023-06-27 11:22:33', status: 'on' },
     { name: 'Gambirra', description: 'Alguma gambirra', location: 'Logo embaixo', date: '2023-07-01 00:01:02', status: 'on' },
     { name: 'Traquitana', description: 'Alguma traquitana', location: 'Depois da curva', date: '2023-07-03 17:34:36', status: 'on' }
-  ]
+  ];
 
   // Injeta Firestore.
   private firestore: Firestore = inject(Firestore);
