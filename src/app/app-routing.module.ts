@@ -83,6 +83,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/view/view.module').then(m => m.ViewPageModule)
   },
 
+  // Experimental → Será apagado!!!
+  {
+    path: 'store',
+    loadChildren: () => import('./temp/store/store.module').then(m => m.StorePageModule)
+  },
+
   // Rota inexistente redireciona para '404'.
   // '**' deve ser SEMPRE a última rota desta lista.
   {
