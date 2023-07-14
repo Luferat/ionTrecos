@@ -89,6 +89,17 @@ const routes: Routes = [
     loadChildren: () => import('./temp/store/store.module').then(m => m.StorePageModule)
   },
 
+  // Experimental → Será apagado!!!
+  {
+    path: 'gps',
+    loadChildren: () => import('./temp/gps/gps.module').then(m => m.GpsPageModule)
+  },
+  {
+    path: 'camera',
+    title: `${env.appName} - Tirar Foto`,
+    loadChildren: () => import('./pages/camera/camera.module').then(m => m.CameraPageModule)
+  },
+
   // Rota inexistente redireciona para '404'.
   // '**' deve ser SEMPRE a última rota desta lista.
   {
