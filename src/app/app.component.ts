@@ -17,9 +17,10 @@ export class AppComponent {
 
   public appPages = [
     { title: 'Início', url: '/home', icon: 'home' },
-    { title: 'Faça Contato', url: '/contacts', icon: 'chatbubbles' },
+    { title: 'Novo Treco', url: 'new', icon: 'add-circle' },
     { title: 'Câmera', url: '/camera', icon: 'camera' },
     { title: 'Geolocalização', url: '/gps', icon: 'map' },
+    { title: 'Faça Contato', url: '/contacts', icon: 'chatbubbles' },
     { title: 'Sobre', url: '/about', icon: 'information-circle' },
     { title: 'Sua Privacidade', url: '/policies', icon: 'document-lock' }
   ];

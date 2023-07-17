@@ -11,6 +11,7 @@
 <ion-content class="ion-padding">
 
   <ion-card *ngIf="thing" class="ion-no-margin">
+    <ion-img [src]="thing.image"></ion-img>
     <ion-card-header>
       <ion-card-title>{{ thing.name }}</ion-card-title>
       <ion-card-subtitle>{{ thing.location }}</ion-card-subtitle>

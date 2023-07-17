@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>listall</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div *ngIf="listImg">
+
+    <p *ngFor="let img of listImg">
+      <ion-img [src]="img" [alt]="img"></ion-img>
+    </p>
+
+  </div>
+
+</ion-content>

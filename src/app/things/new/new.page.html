@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Novo Treco</ion-title>
+    <ion-icon name="add-circle" slot="end" size="large" class="ion-margin"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form *ngIf="!success" [formGroup]="form" (ngSubmit)="sendForm()">
+    <input type="hidden" name="image" formControlName="image">
+
+    Preencha todos os campos abaixo para cadastrar um novo item.
+
+    <p>
+      <ion-img [src]="this.form.controls['image'].value"></ion-img>
+      <ion-grid class="ion-text-center ion-no-margin ion-no-padding">
+        <ion-row>
+          <ion-col><ion-button (click)="getPhoto()">Alterar</ion-button></ion-col>
+          <ion-col><ion-button>Padrão</ion-button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </p>
+
+    <p>
+      <ion-input type="text" label="Nome:" label-placement="floating" fill="outline" placeholder="Nome do item"
+        formControlName="name" required minlength="3"></ion-input>
+      <small class="error-message" *ngIf="formErrors.name">{{ formErrors.name }}</small>
+    </p>
+
+    <p>
+      <ion-input type="text" label="Descrição:" label-placement="floating" fill="outline"
+        placeholder="Descrição do item" formControlName="description" required minlength="3"></ion-input>
+      <small class="error-message" *ngIf="formErrors.description">{{ formErrors.description }}</small>
+    </p>
+
+    <p>
+      <ion-input type="text" label="Localização:" label-placement="floating" fill="outline"
+        placeholder="Localização do item" formControlName="location" required minlength="3"></ion-input>
+      <small class="error-message" *ngIf="formErrors.location">{{ formErrors.location }}</small>
+    </p>
+
+    <p *ngIf="!saving">
+      <ion-button type="submit" [disabled]="form.invalid">Salvar</ion-button>
+    </p>
+
+    <p *ngIf="saving">
+      <ion-button [disabled]="form.invalid"><ion-spinner name="lines"></ion-spinner></ion-button>
+    </p>
+
+  </form>
+
+  <div *ngIf="success">
+    <h3>Cadastrado!</h3>
+    <p>O item foi cadastrado com sucesso.</p>
+    <ion-grid class="ion-text-center">
+      <ion-row>
+        <ion-col><ion-button routerLink="/home">Listar</ion-button></ion-col>
+        <ion-col><ion-button (click)="reload()">Novo</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

@@ -26,7 +26,7 @@
 
     <ion-img [src]="photoURL"></ion-img>
 
-    <ion-button (click)="savePhoto()" color="warning">
+    <ion-button *ngIf="!saved" (click)="savePhoto()" color="warning">
       <ion-icon name="save" slot="start"></ion-icon>
       Salvar
     </ion-button>
@@ -36,6 +36,11 @@
       Nova
     </ion-button>
 
+  </div>
+
+  <div *ngIf="saved">
+    <p><strong>URL da imagem: </strong></p>
+    <p>{{ savedURL }}</p>
   </div>
 
 </ion-content>

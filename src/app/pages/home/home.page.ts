@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, orderBy, query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -17,14 +17,17 @@ export class HomePage implements OnInit {
   private fbCollection = collection(this.firestore, 'things');
 
   // Armazena response da coleção para a view.
-  public things: Observable<any>;
+  public things: any;
 
   env = environment;
 
   constructor() {
 
     // Obtém coleção e armazena em 'things'.
-    this.things = collectionData(this.fbCollection, { idField: 'id' }) as Observable<any>;
+    this.things = collectionData(
+      query(this.fbCollection, orderBy('date', 'desc')),
+      { idField: 'id' }
+    ) as Observable<any>;
 
   }
 

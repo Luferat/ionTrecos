@@ -80,7 +80,7 @@ const routes: Routes = [
   {
     path: 'view/:id',
     title: `${env.appName} - Exibe um Treco`,
-    loadChildren: () => import('./pages/view/view.module').then(m => m.ViewPageModule)
+    loadChildren: () => import('./things/view/view.module').then(m => m.ViewPageModule)
   },
 
   // Experimental → Será apagado!!!
@@ -97,7 +97,20 @@ const routes: Routes = [
   {
     path: 'camera',
     title: `${env.appName} - Tirar Foto`,
-    loadChildren: () => import('./pages/camera/camera.module').then(m => m.CameraPageModule)
+    loadChildren: () => import('./temp/camera/camera.module').then(m => m.CameraPageModule)
+  },
+  {
+    path: 'listall',
+    title: `${env.appName} - Lista Imagens`,
+    loadChildren: () => import('./temp/listall/listall.module').then(m => m.ListallPageModule)
+  },
+  {
+    path: 'new',
+    title: `${env.appName} - Novo Treco`,
+    loadChildren: () => import('./things/new/new.module').then(m => m.NewPageModule),
+    // Se usuário não está logado, carrega 'login'.
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: toLogin }
   },
 
   // Rota inexistente redireciona para '404'.
