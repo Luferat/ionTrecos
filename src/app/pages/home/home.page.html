@@ -20,16 +20,19 @@
 
       <!-- Loop assíncrono para obter cada item da coleção. -->
       <ion-item *ngFor="let thing of things | async">
-        <ion-thumbnail slot="start">
+        <ion-thumbnail slot="start" routerLink="/view/{{ thing.id }}">
           <ion-img [src]="thing.image"></ion-img>
         </ion-thumbnail>
-        <ion-label>          
+        <ion-label>
           <h3><a routerLink="/view/{{ thing.id }}">{{ thing.name }}</a></h3>
-          <p>{{ thing.description }}</p>
+          <p><ion-text color="danger" *ngIf="thing.status === 'off'">* </ion-text>{{ thing.description }}</p>
         </ion-label>
       </ion-item>
 
     </ion-list>
+
+    <div class="ion-text-center"><small><ion-text color="danger">*</ion-text> Documentos inativos não podem ser
+        alterados.</small></div>
 
   </div>
 

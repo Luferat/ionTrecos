@@ -5,6 +5,7 @@ import { Storage, getDownloadURL, ref, uploadString } from '@angular/fire/storag
 import { Auth, User, authState } from '@angular/fire/auth';
 import { Subscription } from 'rxjs';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-new',
@@ -13,25 +14,29 @@ import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 })
 export class NewPage implements OnInit {
 
-
   /**
    * Atributos de uso geral.
    */
-  form!: FormGroup;                       // Cria um formulário do tipo Angular Reactive Forms.
-  success: boolean = false;               // Controla a view → Feedback de confirmação do envio.
-  defaultImage = 'assets/generic.png';    // Imagem padrão para um novo item.
-  photoFormat = '';                       // Armazenará o formato da foto.
-  saving = false;                         // Controla a view → Desabilita botão [SALVAR].
+  private defaultImage = 'assets/generic.png';  // Imagem padrão para um novo item.
+  private photoFormat = '';                     // Formato da foto obtida da câmera.
+
+  /**
+   * Atributos da view.
+   * São usados no HTML do componente.
+   */
+  public form!: FormGroup;          // Cria um formulário do tipo Angular Reactive Forms.
+  public success: boolean = false;  // Controla a view → Feedback de confirmação do envio.
+  public saving = false;            // Controla a view → Desabilita botão [SALVAR].
 
   /**
    * Atributos do Firebase.
    */
-  private storage: Storage = inject(Storage);               // Injeta Firebase Storage.
-  private auth: Auth = inject(Auth);                        // Injeta Firebase Authentication.
-  private firestore: Firestore = inject(Firestore);         // Injeta Firebase Firestore.
-  formCollection = collection(this.firestore, 'things');    // Define a coleção do Firestore.
-  authState = authState(this.auth);                         // Obtém status atual do usuário logado.
-  authStateSubscription = new Subscription;                 // Observer para casos em que usuário muda o status.
+  private storage: Storage = inject(Storage);                     // Injeta Firebase Storage.
+  private auth: Auth = inject(Auth);                              // Injeta Firebase Authentication.
+  private firestore: Firestore = inject(Firestore);               // Injeta Firebase Firestore.
+  private formCollection = collection(this.firestore, 'things');  // Define a coleção do Firestore.
+  private authState = authState(this.auth);                       // Obtém status atual do usuário logado.
+  private authStateSubscription = new Subscription;               // Observer para casos em que usuário muda o status.
 
   // Mensagens de erro de preenchimento do formulário.
   // É usado por 'updateValidationMessages()'.
@@ -61,7 +66,8 @@ export class NewPage implements OnInit {
   constructor(
 
     // Injeta Angular Reactive Forms.
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private services: GeneralService
   ) { }
 
   ngOnInit() {
@@ -74,7 +80,7 @@ export class NewPage implements OnInit {
 
     // Quando um campo do formulário for editado, executa 'updateValidationMessages()' para mostrar mensagens de erro.
     this.form.valueChanges.subscribe(() => {
-      this.updateValidationMessages();
+      this.services.updateValidationMessages(this.form, this.formErrors, this.validationMessages);
     });
 
     // Observer que obtém status de usuário logado.
@@ -103,25 +109,6 @@ export class NewPage implements OnInit {
     });
   }
 
-  // Valida o preenchimento dos campos do formulário em tempo real.
-  // OBS: isso foi obtido após pesquisas na Internet.
-  updateValidationMessages() {
-    for (const field in this.formErrors) {
-      if (Object.prototype.hasOwnProperty.call(this.formErrors, field)) {
-        this.formErrors[field] = '';
-        const control = this.form.get(field);
-        if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessages[field];
-          for (const key in control.errors) {
-            if (Object.prototype.hasOwnProperty.call(control.errors, key)) {
-              this.formErrors[field] += messages[key] + ' ';
-            }
-          }
-        }
-      }
-    }
-  }
-
   // Obtém uma foto da API da câmera quando clica no botão [ALTERAR].
   getPhoto() {
     Camera.getPhoto({                                   // 'getPhoto()' é uma promise.
@@ -134,18 +121,6 @@ export class NewPage implements OnInit {
     })
   }
 
-  // Gera uma string com caracteres aleatórios.
-  // Isso deveria estar em um service.
-  getRandomChars(n: number) {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let sequence = '';
-    for (let i = 0; i < n; i++) {
-      const rndi = Math.floor(Math.random() * chars.length);
-      sequence += chars.charAt(rndi);
-    }
-    return sequence;
-  }
-
   // Salva a foto atual.
   sendForm() {
 
@@ -156,7 +131,7 @@ export class NewPage implements OnInit {
     if (this.form.controls['image'].value !== this.defaultImage) {
 
       // Cria um nome aleatório para a foto usando 'getRandomChars()' e adiciona o formato.
-      let storageRef = ref(this.storage, `${this.getRandomChars(10)}.${this.photoFormat}`);
+      let storageRef = ref(this.storage, `${this.services.getRandomChars(10)}.${this.photoFormat}`);
 
       // Envia a foto para o servidorno fotmato String/Base64.
       uploadString(
@@ -208,4 +183,10 @@ export class NewPage implements OnInit {
     this.saving = false;                                      // Libera o botão [SALVAR].
   }
 
+  // Ao clicar no botão [PADRÃO].
+  setDefaultImage() {
+
+    // Carrega a imagem padrão no campo imagem.
+    this.form.controls['image'].setValue(this.defaultImage);
+  }
 }

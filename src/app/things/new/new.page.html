@@ -11,8 +11,6 @@
 <ion-content class="ion-padding">
 
   <form *ngIf="!success" [formGroup]="form" (ngSubmit)="sendForm()">
-    <input type="hidden" name="image" formControlName="image">
-
     Preencha todos os campos abaixo para cadastrar um novo item.
 
     <p>
@@ -20,7 +18,7 @@
       <ion-grid class="ion-text-center ion-no-margin ion-no-padding">
         <ion-row>
           <ion-col><ion-button (click)="getPhoto()">Alterar</ion-button></ion-col>
-          <ion-col><ion-button>Padrão</ion-button></ion-col>
+          <ion-col><ion-button (click)="setDefaultImage()">Padrão</ion-button></ion-col>
         </ion-row>
       </ion-grid>
     </p>
