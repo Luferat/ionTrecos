@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">ionForm</ion-title>
+    <ion-icon name="logo-ionic" slot="end" size="large" class="ion-margin"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" #contactForm>
+
+  <ion-list>
+    <ion-list-header>Preencha todos os campos:</ion-list-header>
+  </ion-list>
+
+  <p>
+    <ion-input type="text" name="name" id="name" #name label="Nome:" label-placement="floating" fill="outline"
+      placeholder="Digite seu nome" helperText="Digite seu nome" errorText="Nome muito curto" required minlength="3"
+      [(ngModel)]="form.name" (ionChange)="validate()"></ion-input>
+  </p>
+
+  <p>
+    <ion-input type="email" name="email" id="email" #email label="E-mail:" label-placement="floating" fill="outline"
+      placeholder="Digite seu e-mail" helperText="Digite um e-mail válido" errorText="E-mail inválido" required email
+      [(ngModel)]="form.email" (ionChange)="validate()"></ion-input>
+  </p>
+
+  <p>
+    <ion-input type="text" name="subject" id="subject" #subject label="Assunto:" label-placement="floating" fill="outline"
+      placeholder="Digite o assunto" helperText="Digite um assunto válido" errorText="Assunto muito curto" required
+      minlength="3" [(ngModel)]="form.subject" (ionChange)="validate()"></ion-input>
+  </p>
+
+  <p>
+    <ion-textarea name="message" id="message" #message label="Mensagem:" label-placement="floating" fill="outline"
+      placeholder="Digite a mensagem" helperText="Digite uma mensagem válida" errorText="Mensagem muito curta" required
+      minlength="5" [autoGrow]="true" [(ngModel)]="form.message" (ionChange)="validate()"></ion-textarea>
+  </p>
+
+  <p>
+    <ion-button [disabled]="!valid">Enviar</ion-button>
+  </p>
+
+</ion-content>

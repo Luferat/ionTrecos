@@ -10,6 +10,7 @@
 
 <ion-content class="ion-padding">
 
+  <!-- Se o documento "existe", exibe o "ion-card". -->
   <ion-card *ngIf="thing" class="ion-no-margin">
     <ion-img [src]="thing.image"></ion-img>
     <ion-card-header>
@@ -23,23 +24,27 @@
         <li>Em: {{ thing.date | date: 'dd/MM/yyyy' }}</li>
         <li>
           Status:
+
+          <!-- Se "status='off'" o documento está inativo. -->
           <ion-text color="danger" *ngIf="thing.status == 'off'">
-            Inativo
-            <a href="" (click)="changeStatus('on')">Ativar</a>
+            Inativo <a href="/" (click)="changeStatus('on')">Ativar</a>
           </ion-text>
+
+          <!-- Se "status='on'" o documento está ativo. -->
           <ion-text color="success" *ngIf="thing.status == 'on'">
-            Ativo
-            <a href="" (click)="changeStatus('off')">Desativar</a>
+            Ativo <a href="/" (click)="changeStatus('off')">Desativar</a>
           </ion-text>
+
         </li>
       </ul>
 
+      <!-- Links -->
       <ion-grid class="ion-text-center ion-no-padding">
         <ion-row>
           <ion-col><a routerLink="/home">Listar Todos</a></ion-col>
-          <!-- Somente documentos com status = 'on' podem ser alterados ou apagados. -->
-          <ion-col *ngIf="thing.status === 'on'"><a routerLink="/edit">Editar</a></ion-col>
-          <ion-col *ngIf="thing.status === 'on'"><a href="" (click)="changeStatus('del')">Apagar</a></ion-col>
+          <!-- Somente documentos com status = 'on' podem ser editados ou apagados. -->
+          <ion-col *ngIf="thing.status === 'on'"><a routerLink="/edit/{{ thing.id }}">Editar</a></ion-col>
+          <ion-col *ngIf="thing.status === 'on'"><a href="/" (click)="changeStatus('del')">Apagar</a></ion-col>
         </ion-row>
       </ion-grid>
 

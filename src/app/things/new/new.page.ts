@@ -15,6 +15,15 @@ import { GeneralService } from '../../services/general.service';
 export class NewPage implements OnInit {
 
   /**
+   * Injeta dependências.
+   */
+  private storage: Storage = inject(Storage);                 // Firebase Storage.
+  private auth: Auth = inject(Auth);                          // Firebase Authentication.
+  private firestore: Firestore = inject(Firestore);           // Firebase Firestore.
+  private formBuilder: FormBuilder = inject(FormBuilder);     // Construtor de formulários do Angular.    
+  private services: GeneralService = inject(GeneralService);  // Serviços de uso geral.
+
+  /**
    * Atributos de uso geral.
    */
   private defaultImage = 'assets/generic.png';  // Imagem padrão para um novo item.
@@ -31,9 +40,6 @@ export class NewPage implements OnInit {
   /**
    * Atributos do Firebase.
    */
-  private storage: Storage = inject(Storage);                     // Injeta Firebase Storage.
-  private auth: Auth = inject(Auth);                              // Injeta Firebase Authentication.
-  private firestore: Firestore = inject(Firestore);               // Injeta Firebase Firestore.
   private formCollection = collection(this.firestore, 'things');  // Define a coleção do Firestore.
   private authState = authState(this.auth);                       // Obtém status atual do usuário logado.
   private authStateSubscription = new Subscription;               // Observer para casos em que usuário muda o status.
@@ -41,34 +47,14 @@ export class NewPage implements OnInit {
   // Mensagens de erro de preenchimento do formulário.
   // É usado por 'updateValidationMessages()'.
   validationMessages: any = {
-    name: {
-      required: 'O nome é obrigatório.',
-      minlength: 'O nome está muito curto.'
-    },
-    description: {
-      required: 'A descrição é obrigatória.',
-      minlength: 'A descrição está muito curta.'
-    },
-    location: {
-      required: 'A localização é obrigatória.',
-      minlength: 'A localização está muito curta.'
-    }
+    name: { required: 'O nome é obrigatório.', minlength: 'O nome está muito curto.' },
+    description: { required: 'A descrição é obrigatória.', minlength: 'A descrição está muito curta.' },
+    location: { required: 'A localização é obrigatória.', minlength: 'A localização está muito curta.' }
   }
 
   // Contém as mensagens de erro de cada campo do formulário.
   // É usado por 'updateValidationMessages()'.
-  formErrors: any = {
-    name: '',
-    description: '',
-    location: ''
-  }
-
-  constructor(
-
-    // Injeta Angular Reactive Forms.
-    private formBuilder: FormBuilder,
-    private services: GeneralService
-  ) { }
+  formErrors: any = { name: '', description: '', location: '' }
 
   ngOnInit() {
 
@@ -109,7 +95,10 @@ export class NewPage implements OnInit {
     });
   }
 
-  // Obtém uma foto da API da câmera quando clica no botão [ALTERAR].
+  /**
+   * Obtém uma foto da API da câmera (Capacitor) quando clica no botão [ALTERAR].
+   * Referências: https://capacitorjs.com/docs/apis/camera
+   **/
   getPhoto() {
     Camera.getPhoto({                                   // 'getPhoto()' é uma promise.
       quality: 90,                                      // Qualidade da foto.
@@ -117,7 +106,7 @@ export class NewPage implements OnInit {
       resultType: CameraResultType.DataUrl              // Retorna o arquivo da câmera no formato 'BASE64' (jpg).
     }).then((x) => {                                    // Obteve a foto com sucesso.
       this.form.controls['image'].setValue(x.dataUrl);  // Obtém o BASE64 da foto.
-      this.photoFormat = x.format;                      // Obtém o fromato da foto.
+      this.photoFormat = x.format;                      // Obtém o formato da foto.
     })
   }
 
@@ -133,19 +122,25 @@ export class NewPage implements OnInit {
       // Cria um nome aleatório para a foto usando 'getRandomChars()' e adiciona o formato.
       let storageRef = ref(this.storage, `${this.services.getRandomChars(10)}.${this.photoFormat}`);
 
-      // Envia a foto para o servidorno fotmato String/Base64.
+      /**
+       * Envia a foto para o servidor no formato 'String/Base64'.
+       * Referências: https://firebase.google.com/docs/storage/web/upload-files?hl=pt-br
+       **/ 
       uploadString(
-        storageRef,
-        this.form.controls['image'].value.split(',')[1],
-        'base64',
-        { contentType: `image/${this.photoFormat}` }
+        storageRef,                                      // Dome da imagem.
+        this.form.controls['image'].value.split(',')[1], // Dados da imagem.
+        'base64',                                        // Formato dos dados.
+        { contentType: `image/${this.photoFormat}` }     // Formato da foto.
       ).then(() => {
 
-        // Se salvou a imagem.
+        /**
+         * Se salvou a imagem, obtém a URL desta.
+         * Referências: https://firebase.google.com/docs/storage/web/download-files?hl=pt-br#download_data_via_url
+         **/ 
         getDownloadURL(ref(storageRef))
           .then((response) => {
 
-            // Obtém o URL e salva no campo 'image' (oculto) do formulário.
+            // Salva a URL no campo 'image' do formulário.
             this.form.controls['image'].setValue(response);
 
             // Envia o formulário para o Firestore.
@@ -153,6 +148,7 @@ export class NewPage implements OnInit {
           })
       });
 
+      // Se não alterou a foto.
     } else {
 
       // Mantém a foto padrão e envia o formulário para o Firestore.
@@ -164,10 +160,10 @@ export class NewPage implements OnInit {
   saveForm() {
     let formData = this.form.value;                                   // Obtém todos os campos para 'formData'.
     const d = new Date();                                             // Obtém a data atual.
-    formData.date = d.toISOString().split('.')[0].replace('T', ' ');  // Formata a data para 'ISO/system date'.
-    formData.status = 'on';                                           // Campo 'status' do item cadastrado.
+    formData.date = d.toISOString().split('.')[0].replace('T', ' ');  // Formata a data para 'ISO/System date' no campo 'date'.
+    formData.status = 'on';                                           // Define o campo 'status' do item cadastrado.
 
-    // Salva contato no Firestore.
+    // Salva contato no Firestore (promise).
     addDoc(this.formCollection, formData)
       .then((data) => {
         console.log('Item salvo com Id :' + data.id)
